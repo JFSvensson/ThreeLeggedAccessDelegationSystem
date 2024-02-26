@@ -4,12 +4,21 @@
   "description": "Three-legged OAuthj2 access delegation system for a server-side rendered web application and GitLab.",
   "main": "src/server.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git@gitlab.lnu.se:1dv027/student/fs222id/assignment-wt1.git"
   },
   "author": "Fredrik Svensson <fs222id@student.lnu.se>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
