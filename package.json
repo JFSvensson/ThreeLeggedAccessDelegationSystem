@@ -1,0 +1,15 @@
+{
+  "name": "assignment-wt1",
+  "version": "1.0.0",
+  "description": "Three-legged OAuthj2 access delegation system for a server-side rendered web application and GitLab.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:1dv027/student/fs222id/assignment-wt1.git"
+  },
+  "author": "Fredrik Svensson <fs222id@student.lnu.se>",
+  "license": "MIT"
+}
