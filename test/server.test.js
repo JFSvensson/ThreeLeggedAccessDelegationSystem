@@ -1,5 +1,5 @@
-const server = require('../src/server'); // adjust the path to your server.js file
+import server from '../src/server';
 
 test('server.js should import express', () => {
-  expect(server.express).toBeDefined();
+  expect(server.app).toBeDefined();
 });
