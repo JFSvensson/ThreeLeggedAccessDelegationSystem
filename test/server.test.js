@@ -11,3 +11,7 @@ describe('Server configuration', () => {
     expect(response.status).toBe(200)
   })
 })
+
+afterAll(() => {
+  server.server.close()
+})
