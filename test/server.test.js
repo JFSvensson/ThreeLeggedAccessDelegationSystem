@@ -1,5 +1,7 @@
 import server from '../src/server';
 
-test('server.js should import express', () => {
-  expect(server.app).toBeDefined();
+describe('Server configuration', () => {
+  it('should import express', () => {
+    expect(server.app).toBeDefined();
+  })
 });
