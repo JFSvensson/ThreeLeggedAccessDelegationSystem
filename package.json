@@ -1,9 +1,11 @@
 {
   "name": "assignment-wt1",
   "version": "1.0.0",
-  "description": "Three-legged OAuthj2 access delegation system for a server-side rendered web application and GitLab.",
+  "description": "Three-legged OAuth2 access delegation system for a server-side rendered web application and GitLab.",
+  "type": "module",
   "main": "src/server.js",
   "scripts": {
+    "start": "node src/server.js",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -31,6 +33,7 @@
     "extends": "@lnu"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-http-context": "^1.2.4"
   }
 }
