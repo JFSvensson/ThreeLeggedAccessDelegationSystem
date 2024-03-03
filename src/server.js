@@ -14,9 +14,19 @@ import express from 'express'
 import helmet from 'helmet'
 import logger from 'morgan'
 import { router } from './routes/router.js'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
+// Create an Express application.
 const app = express()
 
+// Get the directory name of the path to the module.
+const directoryName = dirname(fileURLToPath(import.meta.url))
+
+// Set base URL for all relative URL:s in document.
+const baseURL = process.env.BASE_URL || '/'
+
+// Setup helmet to secure the application.
 app.use(helmet())
 app.use(
   helmet.contentSecurityPolicy({
@@ -35,6 +45,10 @@ app.use(
 
 // Set up a morgan logger using the dev format for log entries.
 app.use(logger('dev'))
+
+// View engine setup, using ejs
+app.set('view engine', 'ejs')
+app.set('views', join(directoryName, 'views'))
 
 // Middleware to be executed before the routes.
 app.use((req, res, next) => {
