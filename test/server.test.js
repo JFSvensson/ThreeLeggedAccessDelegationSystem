@@ -22,6 +22,12 @@ describe('Routes', () => {
     const response = await request(server.app).get('/api/v1/missing')
     expect(response.status).toBe(404)
   })
+
+  it('should handle errors', async () => {
+    const response = await request(server.app).get('/error')
+    expect(response.status).toBe(500)
+    expect(response.body.error).toBe('Test error')
+  })
 })
 
 afterAll(() => {
