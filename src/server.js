@@ -29,42 +29,32 @@ app.use((req, res, next) => {
 // Register routes.
 app.use('/', router)
 
-// // Error handler.
-// app.use((err, req, res, next) => {
-//   // logger.error(err.message, { error: err })
+// Error handler.
+app.use(function (err, req, res, next) {
+  // 404 Not Found.
+  if (err.status === 404) {
+    return res
+      .status(404)
+      // .sendFile(join(directoryName, 'views', 'errors', '404.html'))
+      .end()
+  }
 
-//   if (process.env.NODE_ENV === 'production') {
-//     // Ensure a valid status code is set for the error.
-//     // If the status code is not provided, default to 500 (Internal Server Error).
-//     // This prevents leakage of sensitive error details to the client.
-//     if (!err.status) {
-//       err.status = 500
-//       err.message = http.STATUS_CODES[err.status]
-//     }
+  // 500 Internal Server Error (in production, all other errors send this response).
+  if (req.app.get('env') !== 'development') {
+    return res
+      .status(500)
+      // .sendFile(join(directoryName, 'views', 'errors', '500.html'))
+      .end()
+  }
 
-//     // Send only the error message and status code to prevent leakage of
-//     // sensitive information.
-//     res
-//       .status(err.status)
-//       .json({
-//         error: err.message
-//       })
+  // Development only!
+  // Only providing detailed error in development.
 
-//     return
-//   }
-//   // ---------------------------------------------------
-//   // ⚠️ WARNING: Development Environment Only!
-//   //             Detailed error information is provided.
-//   // ---------------------------------------------------
-
-//   // Deep copies the error object and returns a new object with
-//   // enumerable and non-enumerable properties (cyclical structures are handled).
-//   const copy = JSON.decycle(err, { includeNonEnumerableProperties: true })
-
-//   return res
-//     .status(err.status || 500)
-//     .json(copy)
-// })
+  // Render the error page.
+  res
+    .status(err.status || 500)
+    // .render('errors/error', { error: err })
+})
 
 // Starts the HTTP server listening for connections.
 const server = app.listen(process.env.PORT, () => {
