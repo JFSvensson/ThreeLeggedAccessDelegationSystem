@@ -12,9 +12,26 @@ import httpContext from 'express-http-context'
 
 import express from 'express'
 import http from 'node:http'
+import helmet from 'helmet'
 import { router } from './routes/router.js'
 
 const app = express()
+
+app.use(helmet())
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'gitlab.lnu.se'],
+      styleSrc: ["'self'", "'unsafe-inline'", 'gitlab.lnu.se'],
+      imgSrc: ["'self'", 'data:', 'gitlab.lnu.se'],
+      connectSrc: ["'self'", 'gitlab.lnu.se'],
+      frameSrc: ["'self'", 'gitlab.lnu.se'],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: []
+    }
+  })
+)
 
 // Middleware to be executed before the routes.
 app.use((req, res, next) => {
