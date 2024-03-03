@@ -30,44 +30,39 @@ describe('Routes', () => {
 })
 
 describe('Helmet', () => {
+  let response
+  beforeEach(async () => {
+    response = await request(server.app).get('/api/v1')
+  })
+
   it('should set the Content-Security-Policy header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['content-security-policy']).toBeDefined()
   })
   it('should set the X-DNS-Prefetch-Control header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['x-dns-prefetch-control']).toBeDefined()
   })
   it('should set the X-Frame-Options header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['x-frame-options']).toBeDefined()
   })
   it('should set the X-Download-Options header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['x-download-options']).toBeDefined()
   })
   it('should set the X-Content-Type-Options header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['x-content-type-options']).toBeDefined()
   })
   it('should set the Referrer-Policy header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['referrer-policy']).toBeDefined()
   })
   it('should set the X-Permitted-Cross-Domain-Policies header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['x-permitted-cross-domain-policies']).toBeDefined()
   })
   it('should set the Strict-Transport-Security header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['strict-transport-security']).toBeDefined()
   })
   it('should set the X-Powered-By header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['x-powered-by']).toBeUndefined()
   })
   it('should set the Server header', async () => {
-    const response = await request(server.app).get('/api/v1')
     expect(response.headers['server']).toBeUndefined()
   })
 })
