@@ -12,8 +12,13 @@ export const router = express.Router()
 
 router.use('/api/v1', v1Router)
 
-// Below is the default route for the application, added for testing purposes.
-// TODO Remove this route when the application is ready for production.
+// Error route for testing purposes.
+router.get('/error', (req, res, next) => {
+  const error = new Error('Test error')
+  error.status = 500
+  next(error)
+})
+// Default route for testing purposes.
 router.get('/', (req, res) => {
   res.status(200).json({ message: 'This is not the API your looking for...' })
 })
