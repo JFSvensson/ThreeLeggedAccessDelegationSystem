@@ -13,6 +13,7 @@ import httpContext from 'express-http-context'
 import express from 'express'
 import http from 'node:http'
 import helmet from 'helmet'
+import logger from 'morgan'
 import { router } from './routes/router.js'
 
 const app = express()
@@ -32,6 +33,9 @@ app.use(
     }
   })
 )
+
+// Set up a morgan logger using the dev format for log entries.
+app.use(logger('dev'))
 
 // Middleware to be executed before the routes.
 app.use((req, res, next) => {
