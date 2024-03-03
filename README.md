@@ -17,3 +17,6 @@ If you're aiming for a higher grade, it's important you choose a design and stru
 Please review [all requirements of the application](../../issues/) including (#1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11, #12, #13, and #14). Pay special attention to the labels indicating if a requirement is required or optional.
 
 As you implement tasks and add functionality, it is important to create and close issues accordingly.
+
+## Inspiration
+Much of the code in this repository is inspired by earlier examples and assignments in the courses 1DV026 and 1DV027 at Linneaus university.
