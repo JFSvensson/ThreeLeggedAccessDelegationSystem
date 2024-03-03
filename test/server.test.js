@@ -64,7 +64,7 @@ describe('Helmet', () => {
     expect(response.headers['x-powered-by']).toBeUndefined()
   })
   it('should set the Server header', async () => {
-    expect(response.headers['server']).toBeUndefined()
+    expect(response.headers.server).toBeUndefined()
   })
 })
 
