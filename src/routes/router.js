@@ -6,10 +6,13 @@
  */
 
 import express from 'express'
+import { router as homeRouter } from './home-router.js'
 import { router as v1Router } from './api/v1/router.js'
 
 export const router = express.Router()
 
+// Register routes.
+router.use('/', homeRouter)
 router.use('/api/v1', v1Router)
 
 // Error route for testing purposes.
@@ -20,7 +23,8 @@ router.get('/error', (req, res, next) => {
 })
 // Default route for testing purposes.
 router.get('/', (req, res) => {
-  res.status(200).json({ message: 'This is not the API your looking for...' })
+  res.status(200).json({ message: 'Welcome, but this is not the API your looking for...' })
+  res.render('index')
 })
 
 // Catch 404.
