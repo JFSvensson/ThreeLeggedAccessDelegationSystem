@@ -8,9 +8,10 @@
  * @since 0.1.0
  */
 
-import httpContext from 'express-http-context'
+// import httpContext from 'express-http-context'
 
 import express from 'express'
+import expressLayouts from 'express-ejs-layouts'
 import helmet from 'helmet'
 import logger from 'morgan'
 import { router } from './routes/router.js'
@@ -46,17 +47,27 @@ app.use(
 // Set up a morgan logger using the dev format for log entries.
 app.use(logger('dev'))
 
-// View engine setup, using ejs
+// View engine setup, using ejs.
 app.set('view engine', 'ejs')
 app.set('views', join(directoryName, 'views'))
 
-// Middleware to be executed before the routes.
-app.use((req, res, next) => {
-  // Add a request UUID to each request and store information about
-  // each request in the request-scoped context.
-  // req.requestUuid = randomUUID()
-  httpContext.set('request', req)
+// Use express-ejs-layouts.
+app.use(expressLayouts)
+app.set('layout', join(directoryName, 'views', 'layouts', 'default'))
 
+// // Middleware to be executed before the routes.
+// app.use((req, res, next) => {
+//   // Add a request UUID to each request and store information about
+//   // each request in the request-scoped context.
+//   // req.requestUuid = randomUUID()
+//   httpContext.set('request', req)
+
+//   next()
+// })
+
+// Middleware for passing the base URL to the views.
+app.use((req, res, next) => {
+  res.locals.baseURL = baseURL
   next()
 })
 
