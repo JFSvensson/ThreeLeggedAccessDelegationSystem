@@ -1,5 +1,6 @@
 import server from '../src/server'
 import request from 'supertest'
+import logger from 'morgan'
 
 describe('Server configuration', () => {
   it('should import express', () => {
@@ -64,6 +65,24 @@ describe('Helmet', () => {
   })
   it('should set the Server header', async () => {
     expect(response.headers['server']).toBeUndefined()
+  })
+})
+
+jest.mock('morgan', () => jest.fn(() => (req, res, next) => {
+  console.log(`${req.method} ${req.url}`)
+  next()
+}))
+
+describe('Logger', () => {
+  it('should use morgan middleware', () => {
+    expect(logger).toHaveBeenCalledWith('dev')
+  })
+
+  it('should log the HTTP request', async () => {
+    const consoleSpy = jest.spyOn(console, 'log')
+    await request(server.app).get('/')
+    expect(consoleSpy).toHaveBeenCalled()
+    consoleSpy.mockRestore()
   })
 })
 
