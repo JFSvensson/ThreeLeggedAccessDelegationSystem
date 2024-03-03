@@ -12,6 +12,7 @@ import httpContext from 'express-http-context'
 
 import express from 'express'
 import http from 'node:http'
+import { router } from './routes/router.js'
 
 const app = express()
 
@@ -26,52 +27,49 @@ app.use((req, res, next) => {
 })
 
 // Register routes.
-// app.use('/', router)
-app.get('/', (req, res) => {
-  res.status(200).send('Server is running')
-})
+app.use('/', router)
 
-// Error handler.
-app.use((err, req, res, next) => {
-  // logger.error(err.message, { error: err })
+// // Error handler.
+// app.use((err, req, res, next) => {
+//   // logger.error(err.message, { error: err })
 
-  if (process.env.NODE_ENV === 'production') {
-    // Ensure a valid status code is set for the error.
-    // If the status code is not provided, default to 500 (Internal Server Error).
-    // This prevents leakage of sensitive error details to the client.
-    if (!err.status) {
-      err.status = 500
-      err.message = http.STATUS_CODES[err.status]
-    }
+//   if (process.env.NODE_ENV === 'production') {
+//     // Ensure a valid status code is set for the error.
+//     // If the status code is not provided, default to 500 (Internal Server Error).
+//     // This prevents leakage of sensitive error details to the client.
+//     if (!err.status) {
+//       err.status = 500
+//       err.message = http.STATUS_CODES[err.status]
+//     }
 
-    // Send only the error message and status code to prevent leakage of
-    // sensitive information.
-    res
-      .status(err.status)
-      .json({
-        error: err.message
-      })
+//     // Send only the error message and status code to prevent leakage of
+//     // sensitive information.
+//     res
+//       .status(err.status)
+//       .json({
+//         error: err.message
+//       })
 
-    return
-  }
-  // ---------------------------------------------------
-  // ⚠️ WARNING: Development Environment Only!
-  //             Detailed error information is provided.
-  // ---------------------------------------------------
+//     return
+//   }
+//   // ---------------------------------------------------
+//   // ⚠️ WARNING: Development Environment Only!
+//   //             Detailed error information is provided.
+//   // ---------------------------------------------------
 
-  // Deep copies the error object and returns a new object with
-  // enumerable and non-enumerable properties (cyclical structures are handled).
-  const copy = JSON.decycle(err, { includeNonEnumerableProperties: true })
+//   // Deep copies the error object and returns a new object with
+//   // enumerable and non-enumerable properties (cyclical structures are handled).
+//   const copy = JSON.decycle(err, { includeNonEnumerableProperties: true })
 
-  return res
-    .status(err.status || 500)
-    .json(copy)
-})
+//   return res
+//     .status(err.status || 500)
+//     .json(copy)
+// })
 
 // Starts the HTTP server listening for connections.
-const server = app.listen(process.env.NODEJS_EXPRESS_PORT, () => {
-  // logger.info(`Server running at http://localhost:${server.address().port}`)
-  // logger.info('Press Ctrl-C to terminate...')
+const server = app.listen(process.env.PORT, () => {
+  console.log(`Server running at http://localhost:${process.env.PORT}`)
+  console.log('Press Ctrl-C to terminate...')
 })
 
 export default { app, server }
