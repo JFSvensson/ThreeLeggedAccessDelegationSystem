@@ -29,6 +29,13 @@ describe('Routes', () => {
   })
 })
 
+describe('Helmet', () => {
+  it('should set the Content-Security-Policy header', async () => {
+    const response = await request(server.app).get('/api/v1')
+    expect(response.headers['content-security-policy']).toBeDefined()
+  })
+})
+
 afterAll(() => {
   server.server.close()
 })
