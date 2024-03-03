@@ -86,13 +86,13 @@ describe('Logger', () => {
   })
 })
 
-// describe('GET /', () => {
-//   it('should render the index view', async () => {
-//     const res = await request(server).get('/')
-//     expect(res.status).toBe(200)
-//     expect(res.text).toContain('Welcome')
-//   })
-// })
+describe('GET /', () => {
+  it('should render the index view', async () => {
+    const response = await request(server.app).get('/')
+    expect(response.status).toBe(200)
+    expect(response.text).toContain('Welcome')
+  })
+})
 
 afterAll(() => {
   server.server.close()
