@@ -12,10 +12,16 @@ describe('Server configuration', () => {
   })
 })
 
-// Add a test for a route defined in your router
-it('should respond to a GET request at /api/v1', async () => {
-  const response = await request(server.app).get('/api/v1')
-  expect(response.status).toBe(200)
+describe('Routes', () => {
+  it('should respond to a GET request at /api/v1', async () => {
+    const response = await request(server.app).get('/api/v1')
+    expect(response.status).toBe(200)
+  })
+
+  it('should respond with a 404 error', async () => {
+    const response = await request(server.app).get('/api/v1/missing')
+    expect(response.status).toBe(404)
+  })
 })
 
 afterAll(() => {
