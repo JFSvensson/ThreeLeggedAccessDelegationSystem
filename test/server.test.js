@@ -98,10 +98,10 @@ describe('GET /login', () => {
   it('should redirect to GitLab\'s authorization page', async () => {
     const response = await request(server.app)
       .get('/login')
-      .expect(302) // expect a redirect
+      .expect(302) // expect an ok response
 
     // Check that the Location header starts with GitLab's authorization URL
-    expect(response.headers.location).toMatch(/^https:\/\/gitlab.com\/oauth\/authorize/)
+    expect(response.headers.location).toMatch(/^https:\/\/gitlab.lnu.se\/oauth\/authorize/)
 
     // Check that the Location header includes the necessary query parameters
     expect(response.headers.location).toMatch(/client_id=/)
