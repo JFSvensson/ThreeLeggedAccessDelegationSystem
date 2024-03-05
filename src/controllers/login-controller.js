@@ -5,6 +5,8 @@
  * @version 0.1.0
  */
 
+import crypto from 'crypto'
+
 /**
  * Encapsulates a controller.
  */
@@ -17,9 +19,8 @@ export class LoginController {
    */
   index (req, res) {
     const CLIENT_ID = process.env.CLIENT_ID
-    const REDIRECT_URI = 'https://cscloud8-57.lnu.se/auth/gitlab/callback'
-    // const STATE = crypto.randomBytes(16).toString('hex')
-    const STATE = '1234'
+    const REDIRECT_URI = process.env.REDIRECT_URI
+    const STATE = crypto.randomBytes(16).toString('hex')
 
     // Store the state in the session for later validation
     req.session.oauthState = STATE
