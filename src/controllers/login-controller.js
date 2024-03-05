@@ -24,8 +24,10 @@ export class LoginController {
     // Store the state in the session for later validation
     req.session.oauthState = STATE
 
-    const authorizeUrl = `https://gitlab.lnu.se/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&state=${STATE}`
-    console.log(authorizeUrl)
+    const SCOPES = 'read_api+read_user+read_repository'
+
+    const authorizeUrl = `https://gitlab.lnu.se/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&state=${STATE}&scope=${SCOPES}`
+
     // Redirect the user to the authorization URL
     res.redirect(authorizeUrl)
   }
