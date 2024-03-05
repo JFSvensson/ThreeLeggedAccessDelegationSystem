@@ -55,6 +55,9 @@ app.set('views', join(directoryName, 'views'))
 app.use(expressLayouts)
 app.set('layout', join(directoryName, 'views', 'layouts', 'default'))
 
+// Middleware for handling static files.
+app.use(express.static(join(directoryName, '..', 'public')))
+
 // // Middleware to be executed before the routes.
 // app.use((req, res, next) => {
 //   // Add a request UUID to each request and store information about
@@ -107,4 +110,6 @@ const server = app.listen(process.env.PORT, () => {
   console.log('Press Ctrl-C to terminate...')
 })
 
+// Export the app and server for testing.
+// TODO remove in production.
 export default { app, server }
