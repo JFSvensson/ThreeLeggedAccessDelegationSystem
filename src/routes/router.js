@@ -7,12 +7,14 @@
 
 import express from 'express'
 import { router as homeRouter } from './home-router.js'
+import { router as loginRouter } from './login-router.js'
 import { router as v1Router } from './api/v1/router.js'
 
 export const router = express.Router()
 
 // Register routes.
 router.use('/', homeRouter)
+router.use('/login', loginRouter)
 router.use('/api/v1', v1Router)
 
 // Error route for testing purposes.
