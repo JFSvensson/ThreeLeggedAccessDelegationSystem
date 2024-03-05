@@ -70,7 +70,7 @@ app.use(express.static(join(directoryName, '..', 'public')))
 // })
 
 // Session middleware.
-const sessionMiddleware = session({
+const sessionMiddleware = {
   name: process.env.SESSION_NAME,
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -79,7 +79,7 @@ const sessionMiddleware = session({
     maxAge: 1000 * 60 * 60 * 24, // 24 hours
     sameSite: 'strict'
   }
-})
+}
 
 // Production settings.
 if (app.get('env') === 'production') {
