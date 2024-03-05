@@ -12,6 +12,7 @@
 
 import express from 'express'
 import expressLayouts from 'express-ejs-layouts'
+import session from 'express-session'
 import helmet from 'helmet'
 import logger from 'morgan'
 import { router } from './routes/router.js'
@@ -67,6 +68,26 @@ app.use(express.static(join(directoryName, '..', 'public')))
 
 //   next()
 // })
+
+// Session middleware.
+const sessionMiddleware = session({
+  name: process.env.SESSION_NAME,
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 24 hours
+    sameSite: 'strict'
+  }
+})
+
+// Production settings.
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // Running behind reverse proxy, trust first proxy
+  sessionMiddleware.cookie.secure = true // Only serve secure cookies, https
+}
+
+app.use(session(sessionMiddleware))
 
 // Middleware for passing the base URL to the views.
 app.use((req, res, next) => {
