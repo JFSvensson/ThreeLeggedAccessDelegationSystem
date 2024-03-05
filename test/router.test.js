@@ -26,6 +26,23 @@ describe('GET /', () => {
   })
 })
 
+describe('GET /login', () => {
+  it('should redirect to GitLab\'s authorization page', async () => {
+    const response = await request(server)
+      .get('/login')
+      .expect(302) // expect a redirect
+
+    // Check that the Location header starts with GitLab's authorization URL
+    expect(response.headers.location).toMatch(/^https:\/\/gitlab.com\/oauth\/authorize/)
+
+    // Check that the Location header includes the necessary query parameters
+    expect(response.headers.location).toMatch(/client_id=/)
+    expect(response.headers.location).toMatch(/redirect_uri=/)
+    expect(response.headers.location).toMatch(/response_type=code/)
+    expect(response.headers.location).toMatch(/state=/)
+  })
+})
+
 afterAll(() => {
   server.server.close()
 })
