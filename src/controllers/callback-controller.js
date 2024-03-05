@@ -44,7 +44,11 @@ export class CallbackController {
 
       // Store the access token in a cookie
       res.cookie('token', data.access_token)
-      console.log('data', data)
+
+      // Fetch the user's profile information
+      const userProfile = await this.fetchUserProfile(data.access_token)
+      console.log('User profile:', userProfile)
+
       // Redirect the user to the home page
       res.redirect('/')
     } catch (error) {
@@ -52,5 +56,26 @@ export class CallbackController {
       console.error(error)
       res.status(500).send('An error occurred while trying to exchange the authorization code for an access token.')
     }
+  }
+
+  /**
+   * Fetches the user's profile information from GitLab.
+   *
+   * @param {string} token - The user's access token.
+   * @returns {Promise<object>} The user's profile information.
+   */
+  async fetchUserProfile (token) {
+    const response = await fetch('https://gitlab.lnu.se/api/v4/user', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`GitLab user endpoint responded with status ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
   }
 }
