@@ -56,20 +56,26 @@ export class CallbackController {
       // Fetch the user's groups
       const userGroups = await this.fetchUserGroups(data.access_token)
       console.log('User groups:', userGroups)
+      const groupsWithProjects = []
 
       // For each group, fetch the projects and their latest commit
       for (const group of userGroups) {
         const projects = await this.fetchGroupProjects(data.access_token, group.id)
         console.log(`Projects of group ${group.id}:`, projects)
+        const projectsWithCommits = []
 
         for (const project of projects) {
           const latestCommit = await this.fetchLatestCommit(data.access_token, project.id)
+          projectsWithCommits.push({ ...project, latestCommit })
           console.log(`Latest commit of project ${project.id}:`, latestCommit)
         }
+
+        groupsWithProjects.push({ ...group, projects: projectsWithCommits })
       }
 
+      res.render('home', { groups: groupsWithProjects })
       // Redirect the user to the home page
-      res.redirect('/')
+      // res.redirect('/')
     } catch (error) {
       // Handle the error
       console.error(error)
