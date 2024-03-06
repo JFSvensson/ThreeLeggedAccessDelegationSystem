@@ -71,13 +71,8 @@ describe('Logger', () => {
 })
 
 describe('Routes', () => {
-  it('should respond to a GET request at /api/v1', async () => {
-    const response = await request(server.app).get('/api/v1')
-    expect(response.status).toBe(200)
-  })
-
   it('should respond with a 404 error', async () => {
-    const response = await request(server.app).get('/api/v1/missing')
+    const response = await request(server.app).get('/missing')
     expect(response.status).toBe(404)
   })
 
