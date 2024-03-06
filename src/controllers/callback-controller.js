@@ -49,6 +49,10 @@ export class CallbackController {
       const userProfile = await this.fetchUserProfile(data.access_token)
       console.log('User profile:', userProfile)
 
+      // Fetch the user's recent activities
+      const userActivities = await this.fetchUserActivities(data.access_token)
+      console.log('User activities:', userActivities)
+
       // Redirect the user to the home page
       res.redirect('/')
     } catch (error) {
@@ -73,6 +77,27 @@ export class CallbackController {
 
     if (!response.ok) {
       throw new Error(`GitLab user endpoint responded with status ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
+  }
+
+  /**
+   * Fetches the user's recent activities from GitLab.
+   *
+   * @param {string} token - The user's access token.
+   * @returns {Promise<object[]>} The user's recent activities.
+   */
+  async fetchUserActivities (token) {
+    const response = await fetch('https://gitlab.lnu.se/api/v4/events?per_page=101', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`GitLab events endpoint responded with status ${response.status}`)
     }
 
     const data = await response.json()
