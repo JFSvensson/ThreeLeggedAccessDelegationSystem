@@ -53,6 +53,21 @@ export class CallbackController {
       const userActivities = await this.fetchUserActivities(data.access_token)
       console.log('User activities:', userActivities)
 
+      // Fetch the user's groups
+      const userGroups = await this.fetchUserGroups(data.access_token)
+      console.log('User groups:', userGroups)
+
+      // For each group, fetch the projects and their latest commit
+      for (const group of userGroups) {
+        const projects = await this.fetchGroupProjects(data.access_token, group.id)
+        console.log(`Projects of group ${group.id}:`, projects)
+
+        for (const project of projects) {
+          const latestCommit = await this.fetchLatestCommit(data.access_token, project.id)
+          console.log(`Latest commit of project ${project.id}:`, latestCommit)
+        }
+      }
+
       // Redirect the user to the home page
       res.redirect('/')
     } catch (error) {
@@ -102,5 +117,70 @@ export class CallbackController {
 
     const data = await response.json()
     return data
+  }
+
+  /**
+   * Fetches the user's groups from GitLab.
+   *
+   * @param {string} token - The user's access token.
+   * @returns {Promise<object[]>} The user's groups.
+   */
+  async fetchUserGroups (token) {
+    const response = await fetch('https://gitlab.lnu.se/api/v4/groups?per_page=5', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`GitLab groups endpoint responded with status ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
+  }
+
+  /**
+   * Fetches the projects of a group from GitLab.
+   *
+   * @param {string} token - The user's access token.
+   * @param {number} groupId - The ID of the group.
+   * @returns {Promise<object[]>} The projects of the group.
+   */
+  async fetchGroupProjects (token, groupId) {
+    const response = await fetch(`https://gitlab.lnu.se/api/v4/groups/${groupId}/projects?per_page=3`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`GitLab group projects endpoint responded with status ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data
+  }
+
+  /**
+   * Fetches the latest commit of a project from GitLab.
+   *
+   * @param {string} token - The user's access token.
+   * @param {number} projectId - The ID of the project.
+   * @returns {Promise<object>} The latest commit of the project.
+   */
+  async fetchLatestCommit (token, projectId) {
+    const response = await fetch(`https://gitlab.lnu.se/api/v4/projects/${projectId}/repository/commits?per_page=1`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`GitLab commits endpoint responded with status ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data[0]
   }
 }
