@@ -1,0 +1,13 @@
+<div class="groups-view">
+  <h2>This is the groups and projects view</h2>
+
+  <% for (const group of groups) { %>
+    <h2><%= group.name %></h2>
+  
+    <% for (const project of group.projects) { %>
+      <h3><%= project.name %></h3>
+      <p>Latest commit: <%= project.latestCommit.title %></p>
+    <% } %>
+  <% } %>
+
+</div>
