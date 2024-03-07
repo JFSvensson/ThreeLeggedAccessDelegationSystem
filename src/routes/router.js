@@ -9,6 +9,7 @@ import express from 'express'
 import { router as homeRouter } from './home-router.js'
 import { router as loginRouter } from './login-router.js'
 import { router as callbackRouter } from './callback-router.js'
+import { router as gitlabRouter } from './gitlab-router.js'
 
 export const router = express.Router()
 
@@ -16,6 +17,9 @@ export const router = express.Router()
 router.use('/', homeRouter)
 router.use('/login', loginRouter)
 router.use('/auth/gitlab/callback', callbackRouter)
+router.use('/profile', gitlabRouter)
+router.use('/activities', gitlabRouter)
+router.use('/groups', gitlabRouter)
 
 // Error route for testing purposes.
 router.get('/error', (req, res, next) => {
