@@ -1,5 +1,10 @@
 <div class="home-view">
   <h1>Welcome</h1>
-  <p>Click Log in to GitLab in the menu above to start using this site.</p>
-  <p></p>
+
+  <% if (!isLoggedIn) { %>
+    <p>Click Log in to GitLab in the menu above to start using this site.</p>
+  <% } else { %>
+    <h3>Hello <%= user.username %>!</h3>
+  <% } %>
+
 </div>

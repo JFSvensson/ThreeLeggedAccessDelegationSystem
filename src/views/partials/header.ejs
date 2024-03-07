@@ -4,9 +4,18 @@
     <li>
       <a href="./">Home</a>
     </li>
-    <li>
-      <a href="./login/">Log in to GitLAb</a>
-    </li>
+    <% if (!isLoggedIn) { %>
+      <li>
+        <a href="./login/">Log in to GitLAb</a>
+      </li>
+    <% } else { %>
+      <li>
+        <a href="./profile/">Profile</a>
+      </li>
+      <li>
+        <a href="./logout/">Log out</a>
+      </li>
+    <% } %>
     </ul>
   </nav>
 </header>
