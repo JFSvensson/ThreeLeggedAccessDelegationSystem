@@ -2,18 +2,18 @@
   <nav>
     <ul>
     <li>
-      <a href="./">Home</a>
+      <a href="./home">Home</a>
     </li>
     <% if (!isLoggedIn) { %>
       <li>
-        <a href="./login/">Log in to GitLAb</a>
+        <a href="./login">Log in to GitLAb</a>
       </li>
     <% } else { %>
       <li>
-        <a href="./profile/">Profile</a>
+        <a href="./gitlab/profile">Profile</a>
       </li>
       <li>
-        <a href="./logout/">Log out</a>
+        <a href="./logout">Log out</a>
       </li>
     <% } %>
     </ul>
