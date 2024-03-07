@@ -18,8 +18,6 @@ export class GitLabService {
    * @returns {Promise} - The user's profile.
    */
   async fetchUserProfile () {
-    console.log('Fetching user profile')
-    console.log('Token:', this.token)
     const response = await fetch(`${this.baseUrl}/user`, {
       headers: { Authorization: `Bearer ${this.token}` }
     })
