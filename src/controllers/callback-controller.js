@@ -4,6 +4,7 @@
  * @author Fredrik Svensson
  * @version 0.1.0
  */
+import { GitLabService } from '../services/GitlabService.js'
 
 /**
  * Encapsulates a controller.
@@ -17,10 +18,8 @@ export class CallbackController {
    */
   async index (req, res) {
     try {
-      console.log('Callback from GitLab')
       // Get the authorization code from the query parameters
       const code = req.query.code
-      console.log('code', code)
       // Send a POST request to the GitLab token endpoint
       const response = await fetch('https://gitlab.lnu.se/oauth/token', {
         method: 'POST',
@@ -43,39 +42,43 @@ export class CallbackController {
       const data = await response.json()
 
       // Store the access token in a cookie
+      console.log('Access token:', data.access_token)
       res.cookie('token', data.access_token)
 
-      // Fetch the user's profile information
-      const userProfile = await this.fetchUserProfile(data.access_token)
-      console.log('User profile:', userProfile)
+      // // Fetch the user's profile information
+      // const userProfile = await this.fetchUserProfile(data.access_token)
+      // console.log('User profile:', userProfile)
 
       // Fetch the user's recent activities
-      const userActivities = await this.fetchUserActivities(data.access_token)
-      console.log('User activities:', userActivities)
+      // const userActivities = await this.fetchUserActivities(data.access_token)
+      // console.log('User activities:', userActivities)
 
-      // Fetch the user's groups
-      const userGroups = await this.fetchUserGroups(data.access_token)
-      console.log('User groups:', userGroups)
-      const groupsWithProjects = []
+      // // Fetch the user's groups
+      // const userGroups = await this.fetchUserGroups(data.access_token)
+      // console.log('User groups:', userGroups)
+      // const groupsWithProjects = []
 
-      // For each group, fetch the projects and their latest commit
-      for (const group of userGroups) {
-        const projects = await this.fetchGroupProjects(data.access_token, group.id)
-        console.log(`Projects of group ${group.id}:`, projects)
-        const projectsWithCommits = []
+      // // For each group, fetch the projects and their latest commit
+      // for (const group of userGroups) {
+      //   const projects = await this.fetchGroupProjects(data.access_token, group.id)
+      //   console.log(`Projects of group ${group.id}:`, projects)
+      //   const projectsWithCommits = []
 
-        for (const project of projects) {
-          const latestCommit = await this.fetchLatestCommit(data.access_token, project.id)
-          projectsWithCommits.push({ ...project, latestCommit })
-          console.log(`Latest commit of project ${project.id}:`, latestCommit)
-        }
+      //   for (const project of projects) {
+      //     const latestCommit = await this.fetchLatestCommit(data.access_token, project.id)
+      //     projectsWithCommits.push({ ...project, latestCommit })
+      //     console.log(`Latest commit of project ${project.id}:`, latestCommit)
+      //   }
 
-        groupsWithProjects.push({ ...group, projects: projectsWithCommits })
-      }
+      //   groupsWithProjects.push({ ...group, projects: projectsWithCommits })
+      // }
 
-      res.render('home', { groups: groupsWithProjects })
-      // Redirect the user to the home page
-      // res.redirect('/')
+      // // Render the groups view
+      // res.render('groups', { groups: groupsWithProjects })
+
+      const service = new GitLabService(data.access_token)
+      const userProfile = await service.fetchUserProfile()
+      res.render('home/index', { userProfile, isLoggedIn: true })
     } catch (error) {
       // Handle the error
       console.error(error)
@@ -87,7 +90,7 @@ export class CallbackController {
    * Fetches the user's profile information from GitLab.
    *
    * @param {string} token - The user's access token.
-   * @returns {Promise<object>} The user's profile information.
+   * @returns {Promise<object>} The user's profile.
    */
   async fetchUserProfile (token) {
     const response = await fetch('https://gitlab.lnu.se/api/v4/user', {
@@ -99,7 +102,7 @@ export class CallbackController {
     if (!response.ok) {
       throw new Error(`GitLab user endpoint responded with status ${response.status}`)
     }
-
+    console.log('Response:', response)
     const data = await response.json()
     return data
   }
