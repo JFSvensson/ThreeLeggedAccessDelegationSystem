@@ -17,9 +17,7 @@ export const router = express.Router()
 router.use('/', homeRouter)
 router.use('/login', loginRouter)
 router.use('/auth/gitlab/callback', callbackRouter)
-router.use('/profile', gitlabRouter)
-router.use('/activities', gitlabRouter)
-router.use('/groups', gitlabRouter)
+router.use('/gitlab', gitlabRouter)
 
 // Error route for testing purposes.
 router.get('/error', (req, res, next) => {
