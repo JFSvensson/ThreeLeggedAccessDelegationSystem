@@ -1,10 +1,26 @@
-<div class="home-view">
-  <h1>Welcome</h1>
+<div class="home-main">
 
-  <% if (!isLoggedIn) { %>
-    <p>Click Log in to GitLab in the menu above to start using this site.</p>
-  <% } else { %>
-    <h3>Hello <%= userProfile.username %>!</h3>
-  <% } %>
+  <div class="text">
+    <h1>Welcome</h1>
+    <p>This is a three-legged OAuth2 access delegation system for a server-side 
+      rendered web application (the consumer) and GitLab (the service provider).</p>
+    
+    <% if (!isLoggedIn) { %>
+      <p>To be able to really enjoy this application you should login to 
+        GitLab using the link in the top menu.</p>
+    <% } else { %>
+      <p>Well, <%= userProfile.name %>, you seem to already have access. Don't hesitate
+        to use the menu to navigate between profile information, a listing of activities 
+        and a summary of your latest groups and projects. </h3>
+    <% } %>
+  </div>
+
+  <div class="image">
+    <img 
+      src="./img/threelegged.webp" 
+      alt="Dall-E abstract illustration inspired by the concept of a three-legged 
+        OAuth2 access delegation system involving a server-side rendered web 
+        application and GitLab." >
+  </div>
 
 </div>
