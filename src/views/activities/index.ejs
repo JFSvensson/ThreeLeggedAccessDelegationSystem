@@ -1,0 +1,18 @@
+<div class="activities-view">
+  <h2>Activities</h2>
+
+  <p>These are your 101 latest activities on GitLab</p>
+  <% activities.forEach((activity, index) => { %>
+    <div class="activity">
+      <p>Activity number: <%= index + 1 %></p>
+      <h3>Title: <%= activity.target_title %></h3>
+      <p>Action name: <%= activity.action_name %></p>
+      <p>Author: <%= activity.author.name %></p>
+      <p>ID: <%= activity.id %></p>
+      <p>Target type: <%= activity.target_type %></p>
+      <p>Date: <%= activity.created_at %></p>
+      <hr>
+    </div>
+  <% }) %>
+
+</div>
