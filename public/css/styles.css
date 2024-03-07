@@ -1,0 +1,25 @@
+/* Styles CSS */
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+.header {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+}
+
+.header h1 {
+  font-size: 24px;
+}
+
+/* Footer styles */
+.footer {
+  background-color: #f8f9fa;
+  box-shadow: 0 -2px 4px 0 rgba(0,0,0,0.1);
+}
+
+.footer p {
+  font-size: 14px;
+}
