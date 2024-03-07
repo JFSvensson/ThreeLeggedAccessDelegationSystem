@@ -15,6 +15,7 @@ import expressLayouts from 'express-ejs-layouts'
 import session from 'express-session'
 import helmet from 'helmet'
 import logger from 'morgan'
+import cookieParser from 'cookie-parser'
 import { router } from './routes/router.js'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -58,6 +59,9 @@ app.set('layout', join(directoryName, 'views', 'layouts', 'default'))
 
 // Middleware for handling static files.
 app.use(express.static(join(directoryName, '..', 'public')))
+
+// Use the cookie-parser middleware
+app.use(cookieParser())
 
 // // Middleware to be executed before the routes.
 // app.use((req, res, next) => {
