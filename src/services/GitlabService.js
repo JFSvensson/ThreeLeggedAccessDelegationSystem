@@ -37,10 +37,28 @@ export class GitLabService {
    * @returns {Promise} - The user's activities.
    */
   async fetchUserActivities () {
-    const response = await fetch(`${this.baseUrl}/events?action=pushed`, {
+    const response1 = await fetch(`${this.baseUrl}/events?per_page=100&page=1`, {
       headers: { Authorization: `Bearer ${this.token}` }
     })
-    return response.json()
+    if (!response1.ok) {
+      throw new Error(`GitLab events endpoint responded with status ${response1.status}`)
+    }
+
+    const response2 = await fetch(`${this.baseUrl}/events?per_page=100&page=2`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    })
+    if (!response2.ok) {
+      throw new Error(`GitLab events endpoint responded with status ${response2.status}`)
+    }
+
+    const data1 = await response1.json()
+    const data2 = await response2.json()
+
+    const response = [...data1, ...data2] // TODO fix over-fetching and DRY
+
+    return response.slice(0, 101)
   }
 
   /**
