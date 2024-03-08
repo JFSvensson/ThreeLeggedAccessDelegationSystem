@@ -1,11 +1,14 @@
-<div class="profile-view">
-  <h2>This is the profile view</h2>
-
-  <p>Name: <%= userProfile.name %></p>
-  <p>Username: <%= userProfile.username %></p>
-  <p>User ID: <%= userProfile.id %></p>
-  <p>Primary e-mail: <%= userProfile.email %></p>
-  <img src="<%= userProfile.avatar_url %>" alt="User Avatar">
-  <p>Last activity: <%= userProfile.last_activity_on %></p>
-
+<div class="main-container">
+  <div class="text">
+    <h1>Basic Profile Information</h1>
+    <p>Name: <%= userProfile.name %></p>
+    <p>Username: <%= userProfile.username %></p>
+    <p>User ID: <%= userProfile.id %></p>
+    <p>Primary e-mail: <%= userProfile.email %></p>
+    <p>Last activity: <%= userProfile.last_activity_on %></p>
+  </div>
+  
+  <div class="image">
+    <img src="<%= userProfile.avatar_url %>" alt="User Avatar">
+  </div>
 </div>

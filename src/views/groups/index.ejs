@@ -1,13 +1,14 @@
-<div class="groups-view">
-  <h2>This is the groups and projects view</h2>
-
-  <% for (const group of groups) { %>
-    <h2><%= group.name %></h2>
-  
-    <% for (const project of group.projects) { %>
-      <h3><%= project.name %></h3>
-      <p>Latest commit: <%= project.latestCommit.title %></p>
-    <% } %>
-  <% } %>
-
+<div class="main-container">
+  <div class="text">
+    <h1>Groups and Projects</h1>
+    <div class="groups-list">
+      <% for (const group of groups) { %>
+        <h2>Group: <%= group.name %></h2>
+        <% for (const project of group.projects) { %>
+          <h3>Project: <%= project.name %></h3>
+          <p>Latest commit: <%= project.latestCommit.title %></p>
+        <% } %>
+      <% } %>
+    </div>
+  </div>
 </div>
