@@ -1,6 +1,9 @@
 <div class="main-container">
   <div class="groups">
     <h1>Groups and Projects</h1>
+    <% if (moreGroups) { %>
+      <p>There are more groups. Only the first 5 are displayed.</p>
+    <% } %>
     <table class="group-list">
       <thead>
         <tr>
@@ -27,20 +30,23 @@
           <% if (group.projects && group.projects.length > 0) { %>
             <tr>
               <td colspan="5">
+                <% if (group.moreProjects) { %>
+                  <p>This group has more projects. Only the first 3 are displayed.</p>
+                <% } %>
                 <table class="project-list">
                   <tbody>
                     <% group.projects.forEach(project => { %>
                       <tr>
-                        <td>Project: <%= project.name %></td>
+                        <td><%= project.name %></td>
                         <td><a href="<%= project.web_url %>">Link</a></td>
-                        <td>Avatar: 
+                        <td>
                           <% if (project.avatar_url) { %>
                             <img src="<%= project.avatar_url %>" alt="avatar" width="50" height="50">
                           <% } %>
                         </td>
-                        <td>Path: <%= project.path %></td>
+                        <td><%= project.path %></td>
                         <td>Latest commit: <%= project.latestCommit.title %> 
-                          by <%= project.latestCommit.committer_name %> 
+                          (<%= project.latestCommit.committer_name %>)
                           <% if (project.latestCommitUser) { %>
                             <% if (!project.latestCommitUser.username) { %>
                               (no public e-mail)
