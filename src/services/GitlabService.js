@@ -77,7 +77,7 @@ export class GitLabService {
    * @returns {Promise} - The group's projects.
    */
   async fetchGroupProjects (groupId) {
-    const response = await fetch(`${this.baseUrl}/groups/${groupId}/projects`, {
+    const response = await fetch(`${this.baseUrl}/groups/${groupId}/projects?include_subgroups=true`, {
       headers: { Authorization: `Bearer ${this.token}` }
     })
     return response.json()
