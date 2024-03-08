@@ -39,3 +39,8 @@ main {
   color: black;
   padding: 20px;
 }
+
+.switch-container {
+  padding-top: 30px;
+  font-size: 0.6rem;
+}
