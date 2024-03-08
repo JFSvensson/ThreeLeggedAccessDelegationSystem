@@ -24,7 +24,6 @@ export class GitLabService {
     if (!response.ok) {
       throw new Error(`GitLab user endpoint responded with status ${response.status}`)
     }
-    console.log('Response:', response)
     const data = await response.json()
     return data
   }
@@ -74,7 +73,7 @@ export class GitLabService {
   /**
    * Fetches the projects for a group from GitLab.
    *
-   * @param {*} groupId - The ID of the group.
+   * @param {string} groupId - The ID of the group.
    * @returns {Promise} - The group's projects.
    */
   async fetchGroupProjects (groupId) {
@@ -87,7 +86,7 @@ export class GitLabService {
   /**
    * Fetches the latest commit for a project from GitLab.
    *
-   * @param {*} projectId - The ID of the project.
+   * @param {string} projectId - The ID of the project.
    * @returns {Promise} - The project's latest commit.
    */
   async fetchLatestCommit (projectId) {
