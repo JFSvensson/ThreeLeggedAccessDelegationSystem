@@ -24,9 +24,20 @@ export class HomeController {
       const userProfile = { username: 'Anonymous' }
       res.render('home', { userProfile, isLoggedIn: false })
     } else {
-      const service = new GitLabService(token)
-      const userProfile = await service.fetchUserProfile()
-      res.render('home', { userProfile, isLoggedIn: true })
+      try {
+        const service = new GitLabService(token)
+        const userProfile = await service.fetchUserProfile()
+        res.render('home', { userProfile, isLoggedIn: true })
+      } catch (error) {
+        if (error.message.includes('status 401')) {
+          // The token is invalid or expired
+          res.clearCookie('token')
+          const userProfile = { username: 'Anonymous' }
+          res.render('home', { userProfile, isLoggedIn: false })
+        } else {
+          next(error)
+        }
+      }
     }
   }
 }
