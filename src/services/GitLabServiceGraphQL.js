@@ -45,9 +45,10 @@ export class GitLabServiceGraphQL {
         currentUser {
           groups(first: 5) {
             nodes {
-              id
               name
-              description
+              webUrl
+              avatarUrl
+              path
             }
           }
         }
@@ -69,8 +70,9 @@ export class GitLabServiceGraphQL {
         group(fullPath: "${groupId}") {
           projects(first: 3) {
             nodes {
-              id
               name
+              webUrl
+              path
               description
             }
           }
