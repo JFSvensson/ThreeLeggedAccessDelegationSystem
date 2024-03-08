@@ -65,16 +65,19 @@ export class GitlabController {
       const groups = await service.fetchUserGroups()
       const groupsWithProjects = []
       for (const group of groups.slice(0, 5)) {
-        const projects = await service.fetchGroupProjects(group.id)
+        const allProjects = await service.fetchGroupProjects(group.id)
+        const projects = allProjects.slice(0, 3)
+        const moreProjects = allProjects.length > 3
         const projectsWithCommits = []
-        for (const project of projects.slice(0, 3)) {
+        for (const project of projects) {
           const latestCommit = await service.fetchLatestCommit(project.id)
           const latestCommitUser = await service.fetchLatestCommitUser(latestCommit.committer_email)
           projectsWithCommits.push({ ...project, latestCommit, latestCommitUser })
         }
-        groupsWithProjects.push({ ...group, projects: projectsWithCommits })
+        groupsWithProjects.push({ ...group, projects: projectsWithCommits, moreProjects })
       }
-      res.render('groups', { groups: groupsWithProjects, isLoggedIn: true })
+      const moreGroups = groups.length > 5
+      res.render('groups', { groups: groupsWithProjects, moreGroups, isLoggedIn: true })
     } catch (error) {
       console.error('Error in groups method:', error)
       next(error)
