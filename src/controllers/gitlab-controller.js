@@ -5,6 +5,7 @@
  * @version 0.1.0
  */
 import { GitLabService } from '../services/GitlabService.js'
+import { GitLabServiceGraphQL } from '../services/GitLabServiceGraphQL.js'
 
 /**
  * Encapsulates a controller.
@@ -23,7 +24,9 @@ export class GitlabController {
       const token = req.cookies.token
       const service = new GitLabService(token)
       const userProfile = await service.fetchUserProfile()
-      res.render('profile', { userProfile, isLoggedIn: true })
+      const serviceGraphQL = new GitLabServiceGraphQL(token)
+      const userProfileGraphQL = await serviceGraphQL.fetchUserProfile()
+      res.render('profile', { userProfile, userProfileGraphQL, isLoggedIn: true })
     } catch (error) {
       console.error('Error in profile method:', error)
       next(error)

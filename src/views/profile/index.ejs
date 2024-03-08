@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="text">
-    <h1>Basic Profile Information</h1>
+    <h1>Basic Profile Information (REST)</h1>
     <p>Name: <%= userProfile.name %></p>
     <p>Username: <%= userProfile.username %></p>
     <p>User ID: <%= userProfile.id %></p>
@@ -10,5 +10,20 @@
   
   <div class="image">
     <img src="<%= userProfile.avatar_url %>" alt="User Avatar">
+  </div>
+</div>
+
+<div class="main-container">
+  <div class="text">
+    <h1>Basic Profile Information (GraphQL)</h1>
+    <p>Name: <%= userProfileGraphQL.name %></p>
+    <p>Username: <%= userProfileGraphQL.username %></p>
+    <p>User ID: <%= userProfileGraphQL.id %></p>
+    <p>Primary e-mail: <%= userProfileGraphQL.publicEmail %></p>
+    <p>Last activity: <%= userProfileGraphQL.lastActivityOn %></p>
+  </div>
+  
+  <div class="image">
+    <img src="https://gitlab.lnu.se<%= userProfileGraphQL.avatarUrl %>" alt="User Avatar">
   </div>
 </div>
