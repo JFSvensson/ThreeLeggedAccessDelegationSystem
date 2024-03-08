@@ -74,6 +74,17 @@ header nav ul li:not(:last-child) {
   margin-right: 20px;
 }
 
+thead {
+  border-bottom: 2px solid rgb(160 160 160);
+  text-align: center;
+  background-color: #e0e0e0;
+  color: #fff;
+}
+
+tbody {
+  background-color: #eeeeee;
+}
+
 /* Footer layout */
 footer {
   height: 40px;
