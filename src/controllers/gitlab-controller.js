@@ -63,19 +63,19 @@ export class GitlabController {
       const token = req.cookies.token
       const service = new GitLabService(token)
       const groups = await service.fetchUserGroups()
-      const groupsWithProjects = []
-      for (const group of groups.slice(0, 5)) {
+      const groupsPromises = groups.slice(0, 5).map(async group => {
         const allProjects = await service.fetchGroupProjects(group.id)
         const projects = allProjects.slice(0, 3)
         const moreProjects = allProjects.length > 3
-        const projectsWithCommits = []
-        for (const project of projects) {
+        const projectsPromises = projects.map(async project => {
           const latestCommit = await service.fetchLatestCommit(project.id)
           const latestCommitUser = await service.fetchLatestCommitUser(latestCommit.committer_email)
-          projectsWithCommits.push({ ...project, latestCommit, latestCommitUser })
-        }
-        groupsWithProjects.push({ ...group, projects: projectsWithCommits, moreProjects })
-      }
+          return { ...project, latestCommit, latestCommitUser }
+        })
+        const projectsWithCommits = await Promise.all(projectsPromises)
+        return { ...group, projects: projectsWithCommits, moreProjects }
+      })
+      const groupsWithProjects = await Promise.all(groupsPromises)
       const moreGroups = groups.length > 5
       res.render('groups', { groups: groupsWithProjects, moreGroups, isLoggedIn: true })
     } catch (error) {
