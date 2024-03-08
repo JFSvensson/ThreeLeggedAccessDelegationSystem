@@ -69,7 +69,8 @@ export class GitlabController {
         const projectsWithCommits = []
         for (const project of projects.slice(0, 3)) {
           const latestCommit = await service.fetchLatestCommit(project.id)
-          projectsWithCommits.push({ ...project, latestCommit })
+          const latestCommitUser = await service.fetchLatestCommitUser(latestCommit.committer_email)
+          projectsWithCommits.push({ ...project, latestCommit, latestCommitUser })
         }
         groupsWithProjects.push({ ...group, projects: projectsWithCommits })
       }

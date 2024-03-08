@@ -93,6 +93,27 @@ export class GitLabService {
     const response = await fetch(`${this.baseUrl}/projects/${projectId}/repository/commits`, {
       headers: { Authorization: `Bearer ${this.token}` }
     })
-    return response.json()
+    // Return only the latest commit
+    const data = await response.json()
+    const latestCommit = data[0]
+    return latestCommit
+  }
+
+  /**
+   * Fetches the user that did the latest commit for a project from GitLab.
+   *
+   * @param {string} committerEmail - The email of the committer.
+   * @returns {Promise} - The user that did the latest commit.
+   */
+  async fetchLatestCommitUser (committerEmail) {
+    const response = await fetch(`${this.baseUrl}/users?search=${committerEmail}`, {
+      headers: { Authorization: `Bearer ${this.token}` }
+    })
+    const data = await response.json()
+    if (Array.isArray(data) && data.length > 0) {
+      return data[0]
+    } else {
+      return null
+    }
   }
 }

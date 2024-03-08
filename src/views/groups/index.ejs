@@ -1,14 +1,76 @@
 <div class="main-container">
   <div class="text">
     <h1>Groups and Projects</h1>
-    <div class="groups-list">
-      <% for (const group of groups) { %>
-        <h2>Group: <%= group.name %></h2>
-        <% for (const project of group.projects) { %>
-          <h3>Project: <%= project.name %></h3>
-          <p>Latest commit: <%= project.latestCommit[0].title %></p>
-        <% } %>
-      <% } %>
-    </div>
+    <table class="group-list">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Group</th>
+          <th>Link</th>
+          <th>Avatar</th>
+          <th>Path</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% groups.forEach((group, index) => { %>
+          <tr class="group">
+            <td><%= index + 1 %></td>
+            <td><%= group.name %></td>
+            <td><a href="<%= group.web_url %>">Link</a></td>
+            <td>
+              <% if (group.avatar_url) { %>
+                <img src="<%= group.avatar_url %>" alt="avatar" width="50" height="50">
+              <% } %>
+            </td>
+            <td><%= group.path %></td>
+          </tr>
+          <% if (group.projects && group.projects.length > 0) { %>
+            <tr>
+              <td colspan="5">
+                <table class="project-list">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Project</th>
+                      <th>Link</th>
+                      <th>Avatar</th>
+                      <th>Path</th>
+                      <th>Latest Commit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% group.projects.forEach(project => { %>
+                      <tr>
+                        <td><%= project.name %></td>
+                        <td><a href="<%= project.web_url %>">Link</a></td>
+                        <td>
+                          <% if (project.avatar_url) { %>
+                            <img src="<%= project.avatar_url %>" alt="avatar" width="50" height="50">
+                          <% } %>
+                        </td>
+                        <td><%= project.path %></td>
+                        <td><%= project.latestCommit.title %> 
+                          by <%= project.latestCommit.committer_name %> 
+                          <% if (project.latestCommitUser) { %>
+                            <% if (!project.latestCommitUser.username) { %>
+                              (no public e-mail)
+                            <% } else { %>
+                              (<%= project.latestCommitUser.username %>)
+                            <% } %>
+                            <% if (project.latestCommitUser.avatar_url) { %>
+                              <img src="<%= project.latestCommitUser.avatar_url %>" alt="avatar" width="20" height="20">
+                            <% } %>
+                          <% } %>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          <% } %>
+        <% }) %>
+      </tbody>
+    </table>
   </div>
 </div>
