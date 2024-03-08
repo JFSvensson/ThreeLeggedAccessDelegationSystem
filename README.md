@@ -1,22 +1,39 @@
 # Assignment WT1 - OAuth + Consuming REST and GraphQL APIs
+This project is a three-legged OAuth2 access delegation system for a server-side rendered web application and GitLab. It enables users to log in to the application using their GitLab account and access the following information from GitLab: basic profile information, the 101 most recent GitLab activities, and information about groups, projects, and the latest commit.
 
-In modern web applications, the ability to delegate access between systems is crucial. One widely used standard for access delegation is OAuth (Open Authorization). Although the OAuth flow may appear complex at first glance, it is important to understand the roles and communication of the different stakeholders (client/consumer/service provider) involved.
+## Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-## The assignment
+### Prerequisites
+- Node.js
+- npm
 
-Your task is to develop a three-legged OAuth2 access delegation system for a server-side rendered web application (the consumer) and GitLab (the service provider). The system should enable users to log in to the consumer application using their gitlab.lnu.se account (#10) and access the following information from GitLab: basic profile information (#11), the 101 most recent GitLab activities (#12), and information about groups, projects and the latest commit.
+### Installation
+1. Clone the repository:
+`git clone git@gitlab.lnu.se:1dv027/student/fs222id/assignment-wt1.git`
+2. Install the dependencies:
+`npm install`
 
-In particular, the system should allow users to view details about the first three projects in each of their first five groups, including information about the latest commit, provided that they have access to those groups (#13).
+### Usage
+To start the server, run:
+`npm start`
+To start the server in development mode, run:
+`npm run dev`
+To run the tests, run:
+`npm test`
+To lint the code, run:
+`npm run lint`
 
-Note that you must not use any external packages or modules that have built-in OAuth support (#2).
+### Built With
+- Node.js
+- Express
+- EJS
 
-If you're aiming for a higher grade, it's important you choose a design and structure for your code that makes it easier to develop, test, and maintain over time. (#14)
+### Author
+Fredrik Svensson - fs222id@student.lnu.se
 
-## Requirements
+### License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-Please review [all requirements of the application](../../issues/) including (#1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11, #12, #13, and #14). Pay special attention to the labels indicating if a requirement is required or optional.
-
-As you implement tasks and add functionality, it is important to create and close issues accordingly.
-
-## Inspiration
-Much of the code in this repository is inspired by earlier examples and assignments in the courses 1DV026 and 1DV027 at Linneaus university.
+### Inspiration
+Much of the code in this repository is inspired by earlier examples and assignments in the courses 1DV026 and 1DV027 at LNU.
