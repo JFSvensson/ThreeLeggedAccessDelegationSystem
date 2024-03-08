@@ -6,7 +6,7 @@
         <h2>Group: <%= group.name %></h2>
         <% for (const project of group.projects) { %>
           <h3>Project: <%= project.name %></h3>
-          <p>Latest commit: <%= project.latestCommit.title %></p>
+          <p>Latest commit: <%= project.latestCommit[0].title %></p>
         <% } %>
       <% } %>
     </div>
