@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" id="restContainer">
   <div class="text">
     <h1>Basic Profile Information (REST)</h1>
     <p>Name: <%= userProfile.name %></p>
@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div class="main-container">
+<div class="main-container" id="graphqlContainer" style="display: none;">
   <div class="text">
     <h1>Basic Profile Information (GraphQL)</h1>
     <p>Name: <%= userProfileGraphQL.name %></p>
@@ -27,3 +27,21 @@
     <img src="https://gitlab.lnu.se<%= userProfileGraphQL.avatarUrl %>" alt="User Avatar">
   </div>
 </div>
+
+<div class="switch-container">
+<input type="checkbox" id="toggleSwitch" /> Turn on GraphQL
+</div>
+
+<script>
+  document.getElementById('toggleSwitch').addEventListener('change', function (event) {
+    const restContainer = document.getElementById('restContainer')
+    const graphqlContainer = document.getElementById('graphqlContainer')
+    if (event.target.checked) {
+      restContainer.style.display = 'none'
+      graphqlContainer.style.display = 'block'
+    } else {
+      restContainer.style.display = 'block'
+      graphqlContainer.style.display = 'none'
+    }
+  })
+</script>
